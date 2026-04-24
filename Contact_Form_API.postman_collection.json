@@ -1,26 +1,64 @@
 {
   "info": {
-    "name": "Contact Form API",
+    "name": "NextEra Dev - Contact Form API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Postman collection for testing the Contact Form API endpoints."
+    "description": "Complete Postman collection for NextEra Dev Contact Form API endpoints. Includes health check, contact form submission, and bulk email functionality.",
+    "_postman_id": "nextera-contact-form-api-v1"
   },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
   "item": [
     {
       "name": "Health Check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response has status ok', function () {",
+              "    pm.expect(pm.response.json().status).to.equal('ok');",
+              "});"
+            ]
+          }
+        }
+      ],
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3000/health",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
           "path": ["health"]
-        }
-      }
+        },
+        "description": "Check if the API server is running and healthy."
+      },
+      "response": []
     },
     {
       "name": "Submit Contact Form",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response indicates success', function () {",
+              "    pm.expect(pm.response.json().success).to.equal(true);",
+              "});"
+            ]
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [
@@ -31,19 +69,34 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"whatsapp\": \"1234567890\",\n  \"country\": \"USA\",\n  \"message\": \"Hello, this is a test message for the contact form.\"\n}"
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+1 (555) 123-4567\",\n  \"budget\": \"$5000 - $10000\",\n  \"services\": [\"Web Development\", \"UI/UX Design\"],\n  \"message\": \"Hello, I am interested in your web development services. I would like to discuss a project idea.\"\n}"
         },
         "url": {
-          "raw": "http://localhost:3000/submit",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
+          "raw": "{{baseUrl}}/submit",
+          "host": ["{{baseUrl}}"],
           "path": ["submit"]
-        }
-      }
+        },
+        "description": "Submit a new contact form request. All fields are required.\n\nRequest body fields:\n- name (string): Submitter's full name\n- email (string): Submitter's email address\n- phone (string): Contact phone number\n- budget (string): Project budget range\n- services (string or array): Services of interest\n- message (string): Detailed message about the project"
+      },
+      "response": []
     },
     {
       "name": "Send Bulk Email",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response indicates success', function () {",
+              "    pm.expect(pm.response.json().success).to.equal(true);",
+              "});"
+            ]
+          }
+        }
+      ],
       "request": {
         "method": "POST",
         "header": [
@@ -54,16 +107,16 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"emails\": [\n    \"user1@example.com\",\n    \"user2@example.com\",\n    \"user3@example.com\"\n  ],\n  \"subject\": \"Important Announcement\",\n  \"text\": \"Hello,\\n\\nThis is a bulk email sent to multiple recipients.\\n\\nBest regards,\\nTeam\",\n  \"html\": \"<html><body><p>Hello,</p><p>This is a bulk email sent to multiple recipients.</p><p>Best regards,<br>Team</p></body></html>\"\n}"
+          "raw": "{\n  \"emails\": [\n    \"recipient1@example.com\",\n    \"recipient2@example.com\",\n    \"recipient3@example.com\"\n  ],\n  \"subject\": \"Exciting Update from NextEra Dev\",\n  \"text\": \"Hello,\\n\\nWe are excited to share some updates about our latest projects and services.\\n\\nBest regards,\\nTeam NextEra Dev\",\n  \"html\": \"<html><body><h2>Hello,</h2><p>We are excited to share some updates about our latest projects and services.</p><p><strong>Best regards,</strong><br>Team NextEra Dev</p></body></html>\"\n}"
         },
         "url": {
-          "raw": "http://localhost:3000/send-bulk",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
+          "raw": "{{baseUrl}}/send-bulk",
+          "host": ["{{baseUrl}}"],
           "path": ["send-bulk"]
-        }
-      }
+        },
+        "description": "Send bulk emails to multiple recipients.\n\nRequest body fields:\n- emails (array): Array of email addresses to send to (required, must not be empty)\n- subject (string): Email subject line (required)\n- text (string): Plain text version of email body (required)\n- html (string): HTML version of email body (optional)"
+      },
+      "response": []
     }
   ]
 }
