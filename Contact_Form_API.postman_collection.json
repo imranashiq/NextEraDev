@@ -1,0 +1,69 @@
+{
+  "info": {
+    "name": "Contact Form API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for testing the Contact Form API endpoints."
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Submit Contact Form",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"whatsapp\": \"1234567890\",\n  \"country\": \"USA\",\n  \"message\": \"Hello, this is a test message for the contact form.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/submit",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["submit"]
+        }
+      }
+    },
+    {
+      "name": "Send Bulk Email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"emails\": [\n    \"user1@example.com\",\n    \"user2@example.com\",\n    \"user3@example.com\"\n  ],\n  \"subject\": \"Important Announcement\",\n  \"text\": \"Hello,\\n\\nThis is a bulk email sent to multiple recipients.\\n\\nBest regards,\\nTeam\",\n  \"html\": \"<html><body><p>Hello,</p><p>This is a bulk email sent to multiple recipients.</p><p>Best regards,<br>Team</p></body></html>\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/send-bulk",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["send-bulk"]
+        }
+      }
+    }
+  ]
+}
